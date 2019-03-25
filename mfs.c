@@ -39,11 +39,29 @@
 
 #define MAX_NUM_ARGUMENTS 5     // Mav shell only supports five arguments
 
+struct filesystem
+{
+  char BS_OEMName[8];
+  int16_t BPB_BytsPerSec;
+  int8_t BPB_SecPerClus;
+  int16_t BPB_RsvdSecCnt;
+  int8_t BPB_NumFATs;
+  int16_t BPB_RootEntCnt;
+  char BS_VolLab[11];
+  int32_t BPB_FATSz32;
+  int32_t BPB_RootClus;
+
+  int32_t RootDirSectors = 0;
+  int32_t FirstDataSector = 0;
+  int32_t FirstSectorofCluster = 0;
+};
+
 int main()
 {
-
+  FILE* image = NULL;
   char * cmd_str = (char*) malloc( MAX_COMMAND_SIZE );
-
+  struct filesystem File_Cup;
+    
   while( 1 )
   {
     // Print out the mfs prompt
@@ -85,14 +103,60 @@ int main()
     }
 
     // Now print the tokenized input as a debug check
-    // \TODO Remove this code and replace with your shell functionality
+    if(!strcmp(token[0], "open"))
+      {
+	if(token[1] == NULL)
+	  {
+	    printf("Usage: open <filename>\n");
+	  }
+	else
+	  {
+	    if(image == NULL)
+	      {
+		image = fopen(token[1], "r");
+		if(image == NULL)
+		  {
+		    printf("Error: File system image not found.\n");
+		  }
+	      }
+	    else
+	      {
+		printf("Error: File system image already open.\n");
+	      }
+	  }
+      }
+    
+    if(!strcmp(token[0], "close"))
+      {
+	if(image != NULL)
+	  {
+	    fclose(image);
+	    image = NULL;
+	  }
+	else
+	  {
+	    printf("Error: File system not open\n");
+	  }
+      }
+    
+    if(!strcmp(token[0], "exit"))
+      {
+	break;
+      }
 
+    if (!strcmp(token[0], "info"))
+      {
+	
+      }
+    
+    /*
     int token_index  = 0;
     for( token_index = 0; token_index < token_count; token_index ++ ) 
     {
       printf("token[%d] = %s\n", token_index, token[token_index] );  
     }
-
+    */
+    
     free( working_root );
 
   }

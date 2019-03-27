@@ -20,7 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#define _GNU_SOURCE
+//#define _GNU_SOURCE // Gives a warning on unbuntu about redefining _GNU_SOURCE. Should probably be
+                      // uncommented later for Omega.
 
 #include <stdio.h>
 #include <unistd.h>
@@ -148,6 +149,38 @@ int main()
       {
 	
       }
+
+    if (!strcmp(token[0], "stat"))
+      {
+	
+      }
+
+    if (!strcmp(token[0], "get"))
+      {
+	
+      }
+
+    if (!strcmp(token[0], "put"))
+      {
+	
+      }
+
+    if (!strcmp(token[0], "cd"))
+      {
+	
+      }
+
+    if (!strcmp(token[0], "ls"))
+      {
+	
+      }
+
+    if (!strcmp(token[0], "read"))
+      {
+	
+      }
+
+
     
     /*
     int token_index  = 0;
